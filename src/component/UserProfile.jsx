@@ -15,7 +15,7 @@ const UserProfile = () => {
 
         const fetchUserData = async () => {
             try {
-                const userResponse = await axios.get(`/user/${userId}`);
+                const userResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}`);
                 if (isMounted) { // Only set state if still mounted
                     setUserData(userResponse.data);
                 }
