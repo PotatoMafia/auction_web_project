@@ -10,7 +10,7 @@ const AuctionDetails = ({ auctionId }) => {
     useEffect(() => {
         const fetchAuctionDetails = async () => {
             try {
-                const response = await axios.get(`/auction/${auctionId}`);
+                const response = await axios.get(`http://127.0.0.1:5000/auction/${auctionId}`);
                 setAuction(response.data);
             } catch (error) {
                 console.error('Error fetching auction details:', error);
@@ -23,7 +23,7 @@ const AuctionDetails = ({ auctionId }) => {
     const handleBidSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/bid', { auction_id: auctionId, bid_price: bidAmount });
+            await axios.post('http://127.0.0.1:5000/bid', { auction_id: auctionId, bid_price: bidAmount });
             alert('Bid placed successfully!');
             setBidAmount(''); // Clear the input field
         } catch (error) {
