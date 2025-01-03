@@ -1,17 +1,21 @@
-// src/component/UserProfile.jsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
     const { userId } = useParams();
+    const navigate = useNavigate();
     console.log('User ID:', userId);
     const [userData, setUserData] = useState(null);
     const [bids, setBids] = useState([]);
     const [transactions, setTransactions] = useState([]);
 
+    // Stany do przechowywania email i password
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     useEffect(() => {
-        let isMounted = true; // Track if the component is mounted
+        let isMounted = true; // Śledzenie, czy komponent jest zamontowany
 
         const fetchUserData = async () => {
             try {
@@ -30,17 +34,26 @@ const UserProfile = () => {
                     setTransactions(transactionsResponse.data);
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Błąd podczas pobierania danych użytkownika:', error);
             }
         };
 
         fetchUserData();
 
         return () => {
-            isMounted = false; // Cleanup function to set isMounted to false
+            isMounted = false; // Funkcja czyszcząca ustawiająca isMounted na false
         };
     }, [userId]);
 
+    const handleAdminNavigate = async () => {
+        try {
+            const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
+            localStorage.setItem('adminToken', response.data.access_token); // Zapisanie tokena
+            navigate('/admin');
+        } catch (error) {
+            console.error('Błąd logowania:', error);
+        }
+    };
 
     return (
         <div>
@@ -50,6 +63,26 @@ const UserProfile = () => {
                     <h3>Dane użytkownika</h3>
                     <p>Email: {userData.email}</p>
                     <p>Użytkownik: {userData.username}</p>
+                    {userData.status === 'admin' && (
+                        <div>
+                            {/* Pola do wprowadzenia email i hasła */}
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <input
+                                type="password"
+                                placeholder="Hasło"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button onClick={handleAdminNavigate}>Przejdź do panelu administracyjnego</button>
+                        </div>
+                    )}
                 </div>
             )}
 
