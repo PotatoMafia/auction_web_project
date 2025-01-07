@@ -1,10 +1,10 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Register from './component/Register';
-import Home from './component/Home';
-import Login from './component/Login';
-import UserProfile from './component/UserProfile';
-import AdminDashboard from './component/AdminDashboard';
+import Register from './component/Register.jsx';
+import Home from './component/Home.jsx';
+import Login from './component/Login.jsx';
+import UserProfile from './component/UserProfile.jsx';
+import AdminDashboard from './component/AdminDashboard.jsx';
 
 const App = () => {
     return (

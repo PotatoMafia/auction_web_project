@@ -4,20 +4,46 @@ import { getAuctions } from '../api/admin';
 // eslint-disable-next-line react/prop-types
 const AdminAuctionList = ({ token, onSelectAuction }) => {
     const [auctions, setAuctions] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        const fetchAuctions = async () => {
+        const checkAdminRole = () => {
             try {
-                const data = await getAuctions(token);
-                setAuctions(data);
+                // eslint-disable-next-line react/prop-types
+                const decoded = JSON.parse(atob(token.split('.')[1]));
+                if (decoded.sub && decoded.sub.role === 'admin'){
+                    setIsAdmin(true);
+                } else {
+                    alert('Brak uprawnień. Zaloguj się jako administrator.');
+                }
             } catch (error) {
-                console.error('Błąd pobierania aukcji:', error);
-                alert('Wystąpił błąd podczas pobierania aukcji.');
+                console.error('Błąd dekodowania tokena:', error);
+                alert('Błąd uwierzytelniania.');
             }
         };
 
-        fetchAuctions();
+        checkAdminRole();
     }, [token]);
+
+    useEffect(() => {
+        if (isAdmin) {
+            const fetchAuctions = async () => {
+                try {
+                    const data = await getAuctions(token);
+                    setAuctions(data);
+                } catch (error) {
+                    console.error('Błąd pobierania aukcji:', error);
+                    alert('Wystąpił błąd podczas pobierania aukcji.');
+                }
+            };
+
+            fetchAuctions();
+        }
+    }, [isAdmin, token]);
+
+    if (!isAdmin) {
+        return null;
+    }
 
     return (
         <div>

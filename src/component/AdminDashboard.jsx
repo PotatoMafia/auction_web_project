@@ -11,15 +11,18 @@ const AdminDashboard = () => {
         const decodeToken = () => {
             try {
                 const decoded = JSON.parse(atob(token.split('.')[1]));
-
+                if (typeof decoded.sub !== 'object') {
+                    throw new Error('Uncorrect Type of Format');
+                }
                 return decoded;
-                // eslint-disable-next-line no-unused-vars
             } catch (error) {
+                console.error('Error of the token decoding :', error);
                 return null;
             }
         };
 
-        const userInfo = decodeToken();
+
+        const userInfo = decodeToken(token);
         console.log('Token:', token);
         console.log('Decoded User Info:', userInfo); // Log decoded user info for verification
 

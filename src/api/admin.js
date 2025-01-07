@@ -6,7 +6,7 @@ const API_URL = 'http://127.0.0.1:5000';
 // WSZ akc
 export const getAuctions = async (token) => {
     try {
-        const response = await axios.get(`${API_URL}/admin/auctions`, {
+        const response = await axios.get(`http://127.0.0.1:5000/admin/auctions`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

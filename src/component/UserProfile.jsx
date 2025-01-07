@@ -4,105 +4,136 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
     const { userId } = useParams();
-    const navigate = useNavigate();
-    console.log('User ID:', userId);
+    useNavigate();
     const [userData, setUserData] = useState(null);
     const [bids, setBids] = useState([]);
     const [transactions, setTransactions] = useState([]);
-
-    // Stany do przechowywania email i password
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        let isMounted = true; // Śledzenie, czy komponent jest zamontowany
-
         const fetchUserData = async () => {
             try {
-                const userResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}`);
-                if (isMounted) {
-                    setUserData(userResponse.data);
-                }
+                const token = localStorage.getItem('token');
+                const userResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUserData(userResponse.data);
 
-                const bidsResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}/bids`);
-                if (isMounted) {
-                    setBids(bidsResponse.data);
-                }
+                // Fetch user bids
+                const bidsResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}/bids`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setBids(bidsResponse.data);
 
-                const transactionsResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}/transactions`);
-                if (isMounted) {
-                    setTransactions(transactionsResponse.data);
-                }
+                // Fetch user transactions
+                const transactionsResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}/transactions`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setTransactions(transactionsResponse.data);
             } catch (error) {
-                console.error('Błąd podczas pobierania danych użytkownika:', error);
+                console.error('Error fetching user data:', error);
             }
         };
 
         fetchUserData();
-
-        return () => {
-            isMounted = false; // Funkcja czyszcząca ustawiająca isMounted na false
-        };
     }, [userId]);
 
-    const handleAdminNavigate = async () => {
+    const handleLogin = async () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
-            localStorage.setItem('adminToken', response.data.access_token); // Zapisanie tokena
-            navigate('/admin');
+            localStorage.setItem('token', response.data.access_token);
+            alert('Logged in successfully');
+            window.location.reload();
         } catch (error) {
-            console.error('Błąd logowania:', error);
+            console.error('Login error:', error);
         }
     };
 
+
+
+    const handleAdminAccess = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Token is missing. Please log in again.');
+                return;
+            }
+
+            const response = await axios.get('http://127.0.0.1:5000/admin', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            alert(response.data.message);
+        } catch (error) {
+            const errorMessage = error.response?.data?.msg || 'An error occurred';
+            alert(`Admin access error: ${errorMessage}`);
+            console.error('Admin access error:', errorMessage);
+        }
+    };
+
+
+
     return (
         <div>
-            <h2>Mój Profil</h2>
-            {userData && (
+            <h2>User Profile</h2>
+            {userData ? (
                 <div>
-                    <h3>Dane użytkownika</h3>
                     <p>Email: {userData.email}</p>
-                    <p>Użytkownik: {userData.username}</p>
-                    {userData.status === 'admin' && (
-                        <div>
-                            {/* Pola do wprowadzenia email i hasła */}
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                            <input
-                                type="password"
-                                placeholder="Hasło"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button onClick={handleAdminNavigate}>Przejdź do panelu administracyjnego</button>
-                        </div>
+                    <p>Username: {userData.username}</p>
+                    <p>Role: {userData.role}</p>
+                    {userData.role === 'admin' && (
+                        <button onClick={handleAdminAccess}>Go to Admin Panel</button>
                     )}
+                </div>
+            ) : (
+                <div>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button onClick={handleLogin}>Login</button>
                 </div>
             )}
 
-            <h3>Historia Licytacji</h3>
-            <ul>
-                {bids.map(bid => (
-                    <li key={bid.bid_id}>
-                        <p>Aukcja ID: {bid.auction_id}, Oferta: ${bid.bid_price}, Czas: {new Date(bid.bid_time).toLocaleString()}</p>
-                    </li>
-                ))}
-            </ul>
+            <h3>Bidding History</h3>
+            {bids.length > 0 ? (
+                <ul>
+                    {bids.map((bid) => (
+                        <li key={bid.bid_id}>
+                            <p>
+                                Auction ID: {bid.auction_id}, Bid: ${bid.bid_price},
+                                Time: {new Date(bid.bid_time).toLocaleString()}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No bids found.</p>
+            )}
 
-            <h3>Historia Transakcji</h3>
-            <ul>
-                {transactions.map(transaction => (
-                    <li key={transaction.transaction_id}>
-                        <p>Aukcja ID: {transaction.auction_id}, Status płatności: {transaction.payment_status}, Czas: {new Date(transaction.transaction_time).toLocaleString()}</p>
-                    </li>
-                ))}
-            </ul>
+            <h3>Transaction History</h3>
+            {transactions.length > 0 ? (
+                <ul>
+                    {transactions.map((transaction) => (
+                        <li key={transaction.transaction_id}>
+                            <p>
+                                Auction ID: {transaction.auction_id}, Payment Status: {transaction.payment_status},
+                                Time: {new Date(transaction.transaction_time).toLocaleString()}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No transactions found.</p>
+            )}
         </div>
     );
 };
