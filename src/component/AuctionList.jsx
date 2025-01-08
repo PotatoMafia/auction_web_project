@@ -4,28 +4,10 @@ import { getAuctions } from '../api/user';
 // eslint-disable-next-line react/prop-types
 const AuctionList = ({ token, onSelectAuction }) => {
     const [auctions, setAuctions] = useState([]);
+    
 
     useEffect(() => {
-        const checkRole = () => {
-            try {
-                // eslint-disable-next-line react/prop-types
-                const decoded = JSON.parse(atob(token.split('.')[1]));
-                if (decoded.sub && decoded.sub.role === 'user'){
-                    return true;
-                } else {
-                    alert('Brak uprawnień. Zaloguj się.');
-                }
-            } catch (error) {
-                console.error('Błąd dekodowania tokena:', error);
-                alert('Błąd uwierzytelniania.');
-            }
-        };
-
-        checkRole();
-    }, [token]);
-
-    useEffect(() => {
-        if (isUser) {
+        if (true) {
             const fetchAuctions = async () => {
                 try {
                     const data = await getAuctions(token);
@@ -38,9 +20,9 @@ const AuctionList = ({ token, onSelectAuction }) => {
 
             fetchAuctions();
         }
-    }, [isUser, token]);
+    }, [token]);
 
-    if (!isUser) {
+    if (false) {
         return null;
     }
 
