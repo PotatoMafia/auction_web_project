@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
     const { userId } = useParams();
-    useNavigate();
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
     const [bids, setBids] = useState([]);
     const [transactions, setTransactions] = useState([]);
@@ -13,6 +13,11 @@ const UserProfile = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
+            if (!userId) {
+
+                navigate('/login');
+                return;
+            }
             try {
                 const token = localStorage.getItem('token');
                 const userResponse = await axios.get(`http://127.0.0.1:5000/user/${userId}`, {
@@ -37,18 +42,37 @@ const UserProfile = () => {
         };
 
         fetchUserData();
-    }, [userId]);
+    }, [userId, navigate]);
 
+    // const handleLogin = async () => {
+    //     try {
+    //         const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
+    //         localStorage.setItem('token', response.data.access_token);
+    //         alert('Logged in successfully');
+    //         window.location.reload();
+    //     } catch (error) {
+    //         console.error('Login error:', error);
+    //     }
+    // };
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
-            localStorage.setItem('token', response.data.access_token);
-            alert('Logged in successfully');
-            window.location.reload();
+            const token = response.data.access_token;
+            const loggedInUserId = response.data.user_id;
+
+            if (!loggedInUserId) {
+                throw new Error('User ID is missing in response');
+            }
+
+            localStorage.setItem('token', token);
+            navigate(`/user/${loggedInUserId}`);
         } catch (error) {
             console.error('Login error:', error);
+            alert('Failed to log in. Please try again.');
         }
     };
+
+
 
 
 
