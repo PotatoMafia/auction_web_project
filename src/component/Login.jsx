@@ -23,7 +23,11 @@ const Login = () => {
                 const data = await response.json();
                 // localStorage.setItem('user_id', data.user_id);
                 localStorage.setItem('token', data.access_token);
-                navigate(`/user/${data.user_id}`);
+                if (data.user_id) {
+                    navigate(`/user/${data.user_id}`);
+                } else {
+                    setError('User ID is missing in the response. Please try again.');
+                }
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Login failed');
