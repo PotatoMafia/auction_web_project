@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminAuctionList from './AdminAuctionList';
 import AdminAuctionForm from './AdminAuctionForm';
-import { fetchAuctions } from '../api/admin'; // Функция для получения списка аукционов
+import { fetchAuctions } from '../api/admin';
 
 const isTokenValid = (token) => {
     try {
@@ -16,7 +16,8 @@ const isTokenValid = (token) => {
 const AdminDashboard = () => {
     const [token] = useState(localStorage.getItem('token'));
     const [selectedAuction, setSelectedAuction] = useState(null);
-    const [auctions, setAuctions] = useState([]); // Список аукционов
+    const [auctions, setAuctions] = useState([]); 
+    const [, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,7 +25,8 @@ const AdminDashboard = () => {
             alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
             navigate('/login');
         } else {
-            // loadAuctions();
+            loadAuctions();
+            setLoading(false);
         }
     }, [token, navigate]);
 
@@ -54,7 +56,7 @@ const AdminDashboard = () => {
                     <AdminAuctionForm
                         token={token}
                         selectedAuction={selectedAuction}
-                        onAuctionUpdated={loadAuctions} // Передаем функцию обновления
+                        onAuctionUpdated={loadAuctions}
                     />
                 </>
             ) : (

@@ -57,11 +57,11 @@ const UserProfile = () => {
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
-            const token = response.data.access_token;
+            // const token = response.data.access_token;
             const loggedInUserId = response.data.user_id;
 
 
-            localStorage.setItem('token', token);
+            // localStorage.setItem('token', token);
             navigate(`/user/${loggedInUserId}`);
         } catch (error) {
             console.error('Login error:', error);

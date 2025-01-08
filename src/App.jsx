@@ -6,17 +6,61 @@ import Login from './component/Login.jsx';
 import UserProfile from './component/UserProfile.jsx';
 import AdminDashboard from './component/AdminDashboard.jsx';
 import UserDashboard from './component/UserDashboard.jsx';
+import Layout from './api/layout.jsx';
 
 const App = () => {
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    };
+
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/user/:userId" element={<UserProfile />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/user/dashboard" element={<UserDashboard />} />
+                <Route
+                    path="/"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <Home />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <Register />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+                <Route
+                    path="/user/:userId"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <UserProfile />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/admin"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <AdminDashboard />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/user/dashboard"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <UserDashboard />
+                        </Layout>
+                    }
+                />
             </Routes>
         </Router>
     );
