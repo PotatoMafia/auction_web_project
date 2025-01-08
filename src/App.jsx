@@ -5,7 +5,7 @@ import Home from './component/Home.jsx';
 import Login from './component/Login.jsx';
 import UserProfile from './component/UserProfile.jsx';
 import AdminDashboard from './component/AdminDashboard.jsx';
-import AuctionList from './component/AuctionList.jsx';
+import UserDashboard from './component/UserDashboard.jsx';
 
 const App = () => {
     return (
@@ -16,6 +16,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/user/:userId" element={<UserProfile />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/user/dashboard" element={<UserDashboard />} />
             </Routes>
         </Router>
     );
