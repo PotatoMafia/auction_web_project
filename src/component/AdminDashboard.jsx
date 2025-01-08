@@ -16,14 +16,15 @@ const isTokenValid = (token) => {
 const AdminDashboard = () => {
     const [token] = useState(localStorage.getItem('token'));
     const [selectedAuction, setSelectedAuction] = useState(null);
-    const [auctions, setAuctions] = useState([]); 
+    const [auctions, setAuctions] = useState([]);
     const [, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!token || !isTokenValid(token)) {
+        if (!token || !isTokenValid(token) || localStorage.getItem('role') !== 'admin') {
             alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
             navigate('/login');
+            localStorage.clear();
         } else {
             loadAuctions();
             setLoading(false);

@@ -78,6 +78,7 @@ const UserProfile = () => {
             const token = localStorage.getItem('token');
             if (!token) {
                 alert('Token is missing. Please log in again.');
+                localStorage.clear();
                 return;
             }
 
