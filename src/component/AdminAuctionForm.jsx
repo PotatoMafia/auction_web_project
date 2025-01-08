@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createAuction, editAuction } from '../api/admin';
 
 // eslint-disable-next-line react/prop-types
-const AdminAuctionForm = ({ token, selectedAuction }) => {
+const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -13,11 +13,16 @@ const AdminAuctionForm = ({ token, selectedAuction }) => {
 
     useEffect(() => {
         if (selectedAuction) {
-            setFormData({// eslint-disable-next-line react/prop-types
-                title: selectedAuction.title,// eslint-disable-next-line react/prop-types
-                description: selectedAuction.description,// eslint-disable-next-line react/prop-types
-                starting_price: selectedAuction.starting_price,// eslint-disable-next-line react/prop-types
-                start_time: selectedAuction.start_time,// eslint-disable-next-line react/prop-types
+            setFormData({
+                // eslint-disable-next-line react/prop-types
+                title: selectedAuction.title,
+                // eslint-disable-next-line react/prop-types
+                description: selectedAuction.description,
+                // eslint-disable-next-line react/prop-types
+                starting_price: selectedAuction.starting_price,
+                // eslint-disable-next-line react/prop-types
+                start_time: selectedAuction.start_time,
+                // eslint-disable-next-line react/prop-types
                 end_time: selectedAuction.end_time
             });
         }
@@ -34,6 +39,7 @@ const AdminAuctionForm = ({ token, selectedAuction }) => {
                 await createAuction(formData, token);
                 alert('Aukcja utworzona pomyślnie');
             }
+
             setFormData({
                 title: '',
                 description: '',
@@ -41,6 +47,11 @@ const AdminAuctionForm = ({ token, selectedAuction }) => {
                 start_time: '',
                 end_time: ''
             });
+
+            // Вызываем функцию обновления списка аукционов
+            if (onAuctionUpdated) {
+                onAuctionUpdated();
+            }
         } catch (error) {
             console.error('Błąd:', error);
             alert('Operacja nie powiodła się');

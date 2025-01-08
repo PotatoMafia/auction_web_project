@@ -20,6 +20,15 @@ export const getAuctions = async (token) => {
     }
 };
 
+export const fetchAuctions = async (token) => {
+    const response = await axios.get('http://127.0.0.1:5000/auctions', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+};
+
 
 // Nowa
 export const createAuction = async (auctionData, token) => {
