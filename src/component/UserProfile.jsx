@@ -85,6 +85,7 @@ const UserProfile = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             alert(response.data.message);
+            navigate('/admin');
         } catch (error) {
             const errorMessage = error.response?.data?.msg || 'An error occurred';
             alert(`Admin access error: ${errorMessage}`);

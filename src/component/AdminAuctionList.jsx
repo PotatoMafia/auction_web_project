@@ -4,45 +4,37 @@ import { getAuctions } from '../api/admin';
 // eslint-disable-next-line react/prop-types
 const AdminAuctionList = ({ token, onSelectAuction }) => {
     const [auctions, setAuctions] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const checkAdminRole = () => {
+        const fetchAuctions = async () => {
             try {
-                // eslint-disable-next-line react/prop-types
-                const decoded = JSON.parse(atob(token.split('.')[1]));
-                if (decoded.sub && decoded.sub.role === 'admin'){
-                    setIsAdmin(true);
-                } else {
-                    alert('Brak uprawnień. Zaloguj się jako administrator.');
-                }
-            } catch (error) {
-                console.error('Błąd dekodowania tokena:', error);
-                alert('Błąd uwierzytelniania.');
+                setLoading(true);
+                const data = await getAuctions(token);
+                console.log('Fetched auctions:', data); // Debug log
+                setAuctions(data);
+            } catch (err) {
+                console.error('Error fetching auctions:', err);
+                setError('Wystąpił błąd podczas pobierania aukcji.');
+            } finally {
+                setLoading(false);
             }
         };
 
-        checkAdminRole();
+        fetchAuctions();
     }, [token]);
 
-    useEffect(() => {
-        if (isAdmin) {
-            const fetchAuctions = async () => {
-                try {
-                    const data = await getAuctions(token);
-                    setAuctions(data);
-                } catch (error) {
-                    console.error('Błąd pobierania aukcji:', error);
-                    alert('Wystąpił błąd podczas pobierania aukcji.');
-                }
-            };
+    if (loading) {
+        return <p>Ładowanie aukcji...</p>;
+    }
 
-            fetchAuctions();
-        }
-    }, [isAdmin, token]);
+    if (error) {
+        return <p>{error}</p>;
+    }
 
-    if (!isAdmin) {
-        return null;
+    if (auctions.length === 0) {
+        return <p>Brak dostępnych aukcji.</p>;
     }
 
     return (

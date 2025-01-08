@@ -1,46 +1,45 @@
-
-import AdminAuctionList from './AdminAuctionList';
-import AdminAuctionForm from './AdminAuctionForm';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AdminAuctionList from './AdminAuctionList';
+import AdminAuctionForm from './AdminAuctionForm';
+
+// Helper function to validate token
+const isTokenValid = (token) => {
+    try {
+        const decoded = JSON.parse(atob(token.split('.')[1]));
+        return decoded.exp * 1000 > Date.now(); // Check expiration timestamp
+    } catch {
+        return false;
+    }
+};
+
 const AdminDashboard = () => {
-    const [token] = useState(localStorage.getItem('adminToken'));
+    const [token] = useState(localStorage.getItem('token'));
+    const [selectedAuction, setSelectedAuction] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const decodeToken = () => {
-            try {
-                const decoded = JSON.parse(atob(token.split('.')[1]));
-                if (typeof decoded.sub !== 'object') {
-                    throw new Error('Uncorrect Type of Format');
-                }
-                return decoded;
-            } catch (error) {
-                console.error('Error of the token decoding :', error);
-                return null;
-            }
-        };
-
-
-        const userInfo = decodeToken(token);
-        console.log('Token:', token);
-        console.log('Decoded User Info:', userInfo); // Log decoded user info for verification
-
-        // Sprawdzanie roli użytkownika
-        if (!token || (userInfo && userInfo.sub.role !== 'admin')) {
-            alert('Brak uprawnień. Zaloguj się jako administrator.');
+        if (!token || !isTokenValid(token)) {
+            alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
             navigate('/login');
         }
     }, [token, navigate]);
 
+    const handleSelectAuction = (auction) => {
+        console.log('Selected auction:', auction); // Debug log
+        setSelectedAuction(auction);
+    };
+
     return (
         <div>
             <h1>Panel Administracyjny</h1>
-            {token && (
+            {token ? (
                 <>
-                    <AdminAuctionList token={token} onSelectAuction={() => {}} />
-                    <AdminAuctionForm token={token} selectedAuction={null} />
+                    <AdminAuctionList token={token} onSelectAuction={handleSelectAuction} />
+                    <AdminAuctionForm token={token} selectedAuction={selectedAuction} />
                 </>
+            ) : (
+                <p>Ładowanie panelu...</p>
             )}
         </div>
     );

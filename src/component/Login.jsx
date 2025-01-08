@@ -21,8 +21,9 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
+                // localStorage.setItem('user_id', data.user_id);
                 localStorage.setItem('token', data.access_token);
-                navigate(`/user/${data.user_id}`); // Перенаправление на страницу профиля пользователя
+                navigate(`/user/${data.user_id}`);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Login failed');
