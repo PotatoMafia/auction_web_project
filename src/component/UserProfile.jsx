@@ -60,9 +60,6 @@ const UserProfile = () => {
             const token = response.data.access_token;
             const loggedInUserId = response.data.user_id;
 
-            if (!loggedInUserId) {
-                throw new Error('User ID is missing in response');
-            }
 
             localStorage.setItem('token', token);
             navigate(`/user/${loggedInUserId}`);
