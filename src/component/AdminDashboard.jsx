@@ -24,7 +24,7 @@ const AdminDashboard = () => {
             alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
             navigate('/login');
         } else {
-            loadAuctions();
+            // loadAuctions();
         }
     }, [token, navigate]);
 
