@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAuctions } from '../api/user';
 
 // eslint-disable-next-line react/prop-types
-const AdminAuctionList = ({ token, onSelectAuction }) => {
+const AuctionList = ({ token, onSelectAuction }) => {
     const [auctions, setAuctions] = useState([]);
 
     useEffect(() => {
