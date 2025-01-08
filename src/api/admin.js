@@ -33,7 +33,10 @@ export const fetchAuctions = async (token) => {
 // Nowa
 export const createAuction = async (auctionData, token) => {
     const response = await axios.post(`${API_URL}/admin/auction`, auctionData, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
     });
     return response.data;
 };

@@ -11,6 +11,7 @@ const AdminAuctionList = ({ auctions, onSelectAuction }) => {
                     <th>Cena Początkowa</th>
                     <th>Data Rozpoczęcia</th>
                     <th>Data Zakończenia</th>
+                    <th>User ID</th>
                     <th>Akcje</th>
                 </tr>
                 </thead>
@@ -23,6 +24,7 @@ const AdminAuctionList = ({ auctions, onSelectAuction }) => {
                         <td>{auction.starting_price}</td>
                         <td>{new Date(auction.start_time).toLocaleString()}</td>
                         <td>{new Date(auction.end_time).toLocaleString()}</td>
+                        <td>{auction.user_id || 'N/A'}</td> {}
                         <td>
                             <button onClick={() => onSelectAuction(auction)}>Edytuj</button>
                         </td>

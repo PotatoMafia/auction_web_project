@@ -8,7 +8,8 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         description: '',
         starting_price: '',
         start_time: '',
-        end_time: ''
+        end_time: '',
+        user_id: ''
     });
 
     useEffect(() => {
@@ -23,7 +24,9 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
                 // eslint-disable-next-line react/prop-types
                 start_time: selectedAuction.start_time,
                 // eslint-disable-next-line react/prop-types
-                end_time: selectedAuction.end_time
+                end_time: selectedAuction.end_time,
+                // eslint-disable-next-line react/prop-types
+                user_id: selectedAuction.user_id || ''
             });
         }
     }, [selectedAuction]);
@@ -34,7 +37,6 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
             if (selectedAuction) {
                 // eslint-disable-next-line react/prop-types
                 await editAuction(selectedAuction.auction_id, formData, token);
-                alert('Aukcja zaktualizowana pomyślnie');
             } else {
                 await createAuction(formData, token);
                 alert('Aukcja utworzona pomyślnie');
@@ -45,10 +47,10 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
                 description: '',
                 starting_price: '',
                 start_time: '',
-                end_time: ''
+                end_time: '',
+                user_id: ''
             });
 
-            // Вызываем функцию обновления списка аукционов
             if (onAuctionUpdated) {
                 onAuctionUpdated();
             }
@@ -103,6 +105,13 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
                     value={formData.end_time}
                     onChange={handleChange}
                     required
+                />
+                <input
+                    type="text"
+                    name="user_id"
+                    placeholder="User ID"
+                    value={formData.user_id}
+                    onChange={handleChange}
                 />
                 <button type="submit">{selectedAuction ? 'Zapisz' : 'Utwórz'}</button>
             </form>
