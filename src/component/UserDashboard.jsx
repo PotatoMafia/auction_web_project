@@ -25,24 +25,17 @@ const UserDashboard = () => {
             }
         }, [token, navigate]);
 
-
-        
-        //console.log('Token:', token);
-        //console.log('Decoded User Info:', userInfo); // Log decoded user info for verification
-
-        // Sprawdzanie roli użytkownika
-        //if (!token || (userInfo && userInfo.sub.role !== 'user')) {
-        //    alert('Brak uprawnień. Zaloguj się.');
-        //    navigate('/login');
-        //}
-    
+        function CheckDetails(id){
+            console.log('Selected auction:', id);
+            navigate(`/auction/${id}`);
+        }
 
     return (
         <div>
             <h1>Panel Aukcyjny</h1>
             {token && (
                 <>
-                    <AuctionList token={token} onSelectAuction={() => {}} />
+                    <AuctionList token={token} onSelectAuction={(auction_id) => {CheckDetails(auction_id)}} />
                 </>
             )}
         </div>

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getAuctions } from '../api/user';
+import Auction from './Auction';
 
 // eslint-disable-next-line react/prop-types
-const AuctionList = ({ token, onSelectAuction }) => {
+const AuctionList = ({ token, onSelectAuction =f =>f }) => {
     const [auctions, setAuctions] = useState([]);
+    //isUser = true;
+
     
 
     useEffect(() => {
@@ -22,20 +25,12 @@ const AuctionList = ({ token, onSelectAuction }) => {
         }
     }, [token]);
 
-    if (false) {
-        return null;
-    }
 
     return (
         <div>
             <h2>Lista Aukcji</h2>
             <ul>
-                {auctions.map((auction) => (
-                    <li key={auction.auction_id}>
-                        <strong>{auction.title}</strong> — {auction.description}
-                        <button onClick={() => onSelectAuction(auction)}>Sprawdz aukcje</button>
-                    </li>
-                ))}
+                {auctions.map(auction => <Auction key={auction.auction_id} {...auction} onCheck={onSelectAuction} />)}
             </ul>
         </div>
     );

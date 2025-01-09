@@ -1,9 +1,11 @@
 // AuctionDetails.js
 import  { useEffect, useState } from 'react';
+import { useParams} from 'react-router-dom';
 import axios from 'axios';
 
 // eslint-disable-next-line react/prop-types
-const AuctionDetails = ({ auctionId }) => {
+const AuctionDetails = () => {
+    const { auctionId } = useParams();
     const [auction, setAuction] = useState(null);
     const [bidAmount, setBidAmount] = useState('');
 
