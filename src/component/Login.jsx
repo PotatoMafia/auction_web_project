@@ -1,6 +1,6 @@
-// src/component/Login.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/style.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,7 +21,6 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                // localStorage.setItem('user_id', data.user_id);
                 localStorage.setItem('token', data.access_token);
                 localStorage.setItem('role', data.role);
                 if (data.user_id) {
@@ -40,37 +39,33 @@ const Login = () => {
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: 'auto', padding: '1rem' }}>
-            <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleLogin}>
-                <div style={{ marginBottom: '1rem' }}>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        style={{ width: '100%', padding: '0.5rem' }}
-                    />
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        style={{ width: '100%', padding: '0.5rem' }}
-                    />
-                </div>
-                <button type="submit" style={{ padding: '0.5rem', width: '100%' }}>
-                    Login
-                </button>
-                <div style={{ marginTop: '1rem' }}>
-                    <p>Dont have an account? <button onClick={() => navigate('/register')}>Register</button></p>
-                </div>
-            </form>
+        <div className="centered-container">
+            <div className="login-form-container">
+                <h2>Login</h2>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <form onSubmit={handleLogin}>
+                    <div className="form-group">
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Login</button>
+                    <p>Don't have an account? <button type="button" onClick={() => navigate('/register')}>Register</button></p>
+                </form>
+            </div>
         </div>
     );
 };

@@ -66,7 +66,7 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
     };
 
     return (
-        <div>
+        <div className="form-container">
             <h2>{selectedAuction ? 'Edytuj Aukcję' : 'Nowa Aukcja'}</h2>
             <form onSubmit={handleSubmit}>
                 <input
@@ -113,10 +113,13 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
                     value={formData.user_id}
                     onChange={handleChange}
                 />
-                <button type="submit">{selectedAuction ? 'Zapisz' : 'Utwórz'}</button>
+                <button type="submit">
+                    {selectedAuction ? 'Zapisz' : 'Utwórz'}
+                </button>
             </form>
         </div>
     );
+
 };
 
 export default AdminAuctionForm;

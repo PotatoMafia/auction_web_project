@@ -7,6 +7,7 @@ import UserProfile from './component/UserProfile.jsx';
 import AdminDashboard from './component/AdminDashboard.jsx';
 import UserDashboard from './component/UserDashboard.jsx';
 import Layout from './api/layout.jsx';
+import './styles/style.css';
 
 const App = () => {
     const handleLogout = () => {

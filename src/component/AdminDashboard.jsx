@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminAuctionList from './AdminAuctionList';
 import AdminAuctionForm from './AdminAuctionForm';
+import '../styles/style.css'
 import { fetchAuctions } from '../api/admin';
 
 const isTokenValid = (token) => {
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div>
+        <div className="scrollable-container">
             <h1>Panel Administracyjny</h1>
             {token ? (
                 <>
