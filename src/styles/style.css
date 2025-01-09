@@ -1,0 +1,119 @@
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.scrollable-container {
+    max-height: 100vh;
+    overflow-y: auto;
+    width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form-container input,
+.form-container textarea,
+.form-container button {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.form-container textarea {
+    resize: none;
+    height: 100px;
+}
+
+.form-container input[type="text"],
+.form-container textarea {
+    max-width: 100%;
+}
+
+.form-container button {
+    background-color: #39b89c;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #2d957a;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+.login-form-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #39b89c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #2d957a;
+}
