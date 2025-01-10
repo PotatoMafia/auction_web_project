@@ -9,6 +9,7 @@ import UserDashboard from './component/UserDashboard.jsx';
 import Layout from './api/layout.jsx';
 import './styles/style.css';
 import AuctionDetails from './component/AuctionDetails.jsx';
+import CreateAuction from './component/CreateAuction.jsx';
 
 const App = () => {
     const handleLogout = () => {
@@ -68,6 +69,14 @@ const App = () => {
                     element={
                         <Layout onLogout={handleLogout}>
                             <AuctionDetails />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/auction/createauction"
+                    element={
+                        <Layout onLogout={handleLogout}>
+                            <CreateAuction />
                         </Layout>
                     }
                 />

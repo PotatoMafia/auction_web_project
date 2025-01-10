@@ -1,8 +1,18 @@
 // AuctionDetails.js
 import  { useEffect, useState } from 'react';
-import { useParams} from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Bid from './Bid';
+
+
+const isTokenValid = (token) => {
+    try {
+        const decoded = JSON.parse(atob(token.split('.')[1]));
+        return decoded.exp * 1000 > Date.now(); // Check expiration timestamp
+    } catch {
+        return false;
+    }
+};
 
 // eslint-disable-next-line react/prop-types
 const AuctionDetails = () => {
@@ -10,6 +20,16 @@ const AuctionDetails = () => {
     const [auction, setAuction] = useState(null);
     const [bidAmount, setBidAmount] = useState('');
     const [bids, setBids] = useState([]);
+    const [token] = useState(localStorage.getItem('token'));
+    const navigate = useNavigate();
+
+    useEffect(() => {
+                if (!token || !isTokenValid(token)) {
+                    alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
+                    navigate('/login');
+                }
+            }, [token, navigate]);
+
 
 
     
@@ -31,7 +51,9 @@ const AuctionDetails = () => {
     const handleBidSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:5000/bid', {auction_id: auctionId, bid_price: bidAmount, token: localStorage.getItem('token') });
+            await axios.post('http://127.0.0.1:5000/bid', {
+                headers: {Authorization: `Bearer ${token}`},
+            auction_id: auctionId, bid_price: bidAmount, user_id: localStorage.getItem('userId') });
             alert('Bid placed successfully!');
             setBidAmount(''); // Clear the input field
         } catch (error) {

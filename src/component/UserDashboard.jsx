@@ -3,6 +3,7 @@ import AuctionList from './AuctionList';
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CreateAuction from './CreateAuction';
 
 const isTokenValid = (token) => {
     try {

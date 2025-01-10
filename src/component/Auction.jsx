@@ -3,7 +3,7 @@
 
 
 
-export default function Auction({auction_id, description, end_time, start_time, starting_price, title, user_id, onCheck = f => f}) {
+export default function Auction({auction_id, description, end_time, start_time, starting_price, title, user_id,status, onCheck = f => f}) {
 
     const Container = ({ children }) => {
         return (
@@ -32,6 +32,7 @@ export default function Auction({auction_id, description, end_time, start_time, 
             <Container>
             <h1>Tytuł: {title}</h1>
             <h3>ID: {auction_id}</h3>
+            <h3>Status: {status}</h3>
             <h3>Cena wywoławcza: {starting_price}</h3>
             <h3>Użytkownik: {user_id}</h3>
             <h3>Start Aukcji:{start_time}</h3>

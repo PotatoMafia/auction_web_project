@@ -23,6 +23,7 @@ const Login = () => {
                 const data = await response.json();
                 localStorage.setItem('token', data.access_token);
                 localStorage.setItem('role', data.role);
+                localStorage.setItem('userId',data.user_id);
                 if (data.user_id) {
                     navigate(`/user/${data.user_id}`);
                 } else {
