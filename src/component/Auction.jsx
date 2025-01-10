@@ -3,8 +3,10 @@
 
 
 
+// eslint-disable-next-line react/prop-types
 export default function Auction({auction_id, description, end_time, start_time, starting_price, title, user_id,status, onCheck = f => f}) {
 
+    // eslint-disable-next-line react/prop-types
     const Container = ({ children }) => {
         return (
             <div style={{

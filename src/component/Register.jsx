@@ -15,7 +15,7 @@ const Register = () => {
         try {
             await registerUser({ email, username, password });
             alert('Registration successful');
-            navigate('/login'); // Перенаправление на страницу логина после успешной регистрации
+            navigate('/login');
             // eslint-disable-next-line no-unused-vars
         } catch (error) {
             setError('Failed to register. Please try again.');

@@ -12,19 +12,16 @@ const AuctionList = ({ token, onSelectAuction =f =>f }) => {
     
 
     useEffect(() => {
-        if (true) {
-            const fetchAuctions = async () => {
-                try {
-                    const data = await getAuctions(token);
-                    setAuctions(data);
-                } catch (error) {
-                    console.error('Błąd pobierania aukcji:', error);
-                    alert('Wystąpił błąd podczas pobierania aukcji.');
-                }
-            };
-
-            fetchAuctions();
-        }
+        const fetchAuctions = async () => {
+            try {
+                const data = await getAuctions(token);
+                setAuctions(data);
+            } catch (error) {
+                console.error('Błąd pobierania aukcji:', error);
+                alert('Wystąpił błąd podczas pobierania aukcji.');
+            }
+        };
+        fetchAuctions();
     }, [token]);
 
 
