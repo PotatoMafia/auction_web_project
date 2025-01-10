@@ -14,8 +14,14 @@ import CreateAuction from './component/CreateAuction.jsx';
 const App = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
+        window.location.href = '/';
+    };
+
+    const handleLogin = () => {
+        localStorage.removeItem('token');
         window.location.href = '/login';
     };
+    
 
     return (
         <Router>
@@ -23,7 +29,7 @@ const App = () => {
                 <Route
                     path="/"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}> 
                             <Home />
                         </Layout>
                     }
@@ -31,7 +37,7 @@ const App = () => {
                 <Route
                     path="/register"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <Register />
                         </Layout>
                     }
@@ -43,7 +49,7 @@ const App = () => {
                 <Route
                     path="/user/:userId"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <UserProfile />
                         </Layout>
                     }
@@ -51,7 +57,7 @@ const App = () => {
                 <Route
                     path="/admin"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <AdminDashboard />
                         </Layout>
                     }
@@ -59,7 +65,7 @@ const App = () => {
                 <Route
                     path="/dashboard"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <UserDashboard />
                         </Layout>
                     }
@@ -67,7 +73,7 @@ const App = () => {
                 <Route
                     path="/auction/:auctionId"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <AuctionDetails />
                         </Layout>
                     }
@@ -75,7 +81,7 @@ const App = () => {
                 <Route
                     path="/auction/createauction"
                     element={
-                        <Layout onLogout={handleLogout}>
+                        <Layout onLogout={handleLogout} onLogin={handleLogin}>
                             <CreateAuction />
                         </Layout>
                     }

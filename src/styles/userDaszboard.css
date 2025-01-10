@@ -1,0 +1,16 @@
+/* Możesz dodać te style do pliku CSS w swoim projekcie */
+html, body {
+    height: 100%;         /* Ustawienie wysokości dla całej strony */
+    margin: 0;            /* Usunięcie marginesu */
+}
+
+body {
+    overflow-y: auto;     /* Włącza przewijanie w pionie */
+    height: 100%;         /* Wysokość 100% okna przeglądarki */
+}
+
+#root {
+    min-height: 100%;     /* Ustawienie minimalnej wysokości kontenera */
+    display: flex;
+    flex-direction: column; /* Umożliwia łatwiejsze zarządzanie przestrzenią */
+}

@@ -56,7 +56,7 @@ const AuctionDetails = () => {
             auction_id: auctionId, bid_price: bidAmount, user_id: localStorage.getItem('userId') });
             alert('Bid placed successfully!');
             setBidAmount(''); // Clear the input field
-            window.location.reload();
+            navigate(`/auction/${auctionId}`);
         } catch (error) {
             console.error('Error placing bid:', error);
             alert('Failed to place bid.');

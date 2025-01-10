@@ -2,7 +2,7 @@ import TopBar from '../component/TopBar';
 import '../styles/logout.css';
 
 // eslint-disable-next-line react/prop-types
-const Layout = ({ children, onLogout }) => {
+const Layout = ({ children, onLogout, onLogin}) => {
     return (
         <div
             style={{
@@ -15,7 +15,7 @@ const Layout = ({ children, onLogout }) => {
                 overflow: 'hidden',
             }}
         >
-            <TopBar onLogout={onLogout} />
+            <TopBar onLogout={onLogout} onLogin={onLogin} />
             <div
                 style={{
                     flex: 1,

@@ -1,9 +1,6 @@
-
 import AuctionList from './AuctionList';
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CreateAuction from './CreateAuction';
 
 const isTokenValid = (token) => {
     try {
@@ -14,29 +11,28 @@ const isTokenValid = (token) => {
     }
 };
 
-
 const UserDashboard = () => {
     const [token] = useState(localStorage.getItem('token'));
     const navigate = useNavigate();
 
-        useEffect(() => {
-            if (!token || !isTokenValid(token)) {
-                alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
-                navigate('/login');
-            }
-        }, [token, navigate]);
-
-        function CheckDetails(id){
-            console.log('Selected auction:', id);
-            navigate(`/auction/${id}`);
+    useEffect(() => {
+        if (!token || !isTokenValid(token)) {
+            alert('Brak uprawnień lub token wygasł. Zaloguj się ponownie.');
+            navigate('/login');
         }
+    }, [token, navigate]);
+
+    function CheckDetails(id) {
+        console.log('Selected auction:', id);
+        navigate(`/auction/${id}`);
+    }
 
     return (
-        <div>
+        <div style={{ height: '100vh', overflowY: 'auto' }}>
             <h1>Panel Aukcyjny</h1>
             {token && (
                 <>
-                    <AuctionList token={token} onSelectAuction={(auction_id) => {CheckDetails(auction_id)}} />
+                    <AuctionList token={token} onSelectAuction={(auction_id) => { CheckDetails(auction_id) }} />
                 </>
             )}
         </div>
