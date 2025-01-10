@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createAuction } from "../api/user";
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateAuction() {
     const [title, setTitle] = useState("");
@@ -11,6 +12,7 @@ export default function CreateAuction() {
     const [endDate, setEndDate] = useState(new Date());
     const [token] = useState(localStorage.getItem('token'));
     const [user_id] = useState(localStorage.getItem('userId'));
+    const navigate = useNavigate();
 
 
 
@@ -38,8 +40,8 @@ export default function CreateAuction() {
         };
         console.log("Auction created:", auctionData);
         createAuction(token,formatDate(startDate),formatDate(endDate),startPrice,user_id,title,description)
-        
         alert("Auction submitted successfully!");
+        navigate('/dashboard');
     };
 
     return (
