@@ -20,8 +20,7 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         if (selectedAuction) {
             setFormData({
                 // eslint-disable-next-line react/prop-types
-                title: selectedAuction.title,
-                // eslint-disable-next-line react/prop-types
+                title: selectedAuction.title,// eslint-disable-next-line react/prop-types
                 description: selectedAuction.description,// eslint-disable-next-line react/prop-types
                 starting_price: selectedAuction.starting_price,// eslint-disable-next-line react/prop-types
                 start_time: selectedAuction.start_time,// eslint-disable-next-line react/prop-types
@@ -43,8 +42,30 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         }
     };
 
+    const handleImageCancel = () => {
+        setFormData((prevState) => ({
+            ...prevState,
+            image: null,
+        }));
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // Очищаем выбранный файл
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Проверка, что конечная дата не раньше начальной
+        if (new Date(formData.end_time) <= new Date(formData.start_time)) {
+            alert('End time cannot be earlier than start time');
+            return;
+        }
+
+        // Проверка, что изображение выбрано
+        if (!formData.image) {
+            alert('Image is required');
+            return;
+        }
 
         const formDataToSend = new FormData();
         formDataToSend.append('title', formData.title);
@@ -58,7 +79,6 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         if (formData.image) {
             formDataToSend.append('image', formData.image);
         }
-
 
         try {
             if (selectedAuction) {
@@ -98,6 +118,28 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         setFormData((prevState) => ({ ...prevState, [name]: value }));
     };
 
+    const handleCancel = () => {
+        // Сбросить форму и вернуть к первоначальному состоянию
+        setFormData({
+            title: '',
+            description: '',
+            starting_price: '',
+            start_time: '',
+            end_time: '',
+            user_id: '',
+            status: '',
+            image: null,
+        });
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // Очистить поле выбора файла
+        }
+
+        if (onAuctionUpdated) {
+            onAuctionUpdated(); // Вызываем обновление (если необходимо)
+        }
+    };
+
     return (
         <div className="form-container">
             <h2>{selectedAuction ? 'Edit Auction' : 'New Auction'}</h2>
@@ -108,13 +150,22 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
                 <input type="datetime-local" name="start_time" value={formData.start_time} onChange={handleChange} required />
                 <input type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange} required />
                 <input type="text" name="user_id" placeholder="User ID" value={formData.user_id} onChange={handleChange} />
-                <input type="file" name="image" ref={fileInputRef} onChange={handleImageChange} />
+
+                <div className="image-upload-container">
+                    <input type="file" name="image" ref={fileInputRef} onChange={handleImageChange} />
+                    {formData.image && (
+                        <button type="button" onClick={handleImageCancel} className="cancel-button">Cancel</button>
+                    )}
+                </div>
+
                 <div className="image-preview">
                     {formData.image && (
                         <img src={URL.createObjectURL(formData.image)} alt="Preview" style={{ width: 50, height: 50 }} />
                     )}
                 </div>
+
                 <button type="submit">{selectedAuction ? 'Save' : 'Create'}</button>
+                <button type="button" onClick={handleCancel} className="button1">Cancel Edit</button>
             </form>
         </div>
     );
