@@ -1,4 +1,4 @@
-/* Стиль для анимации сердца */
+
 .heart-container {
     display: flex;
     justify-content: center;
@@ -35,7 +35,6 @@
     left: 0;
 }
 
-/* Анимация крутящегося сердца */
 @keyframes spin {
     0% {
         transform: rotate(45deg);

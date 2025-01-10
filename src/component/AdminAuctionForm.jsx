@@ -55,13 +55,11 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Проверка, что конечная дата не раньше начальной
         if (new Date(formData.end_time) <= new Date(formData.start_time)) {
             alert('End time cannot be earlier than start time');
             return;
         }
 
-        // Проверка, что изображение выбрано
         if (!formData.image) {
             alert('Image is required');
             return;
@@ -119,7 +117,6 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
     };
 
     const handleCancel = () => {
-        // Сбросить форму и вернуть к первоначальному состоянию
         setFormData({
             title: '',
             description: '',
@@ -132,11 +129,11 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         });
 
         if (fileInputRef.current) {
-            fileInputRef.current.value = ''; // Очистить поле выбора файла
+            fileInputRef.current.value = '';
         }
 
         if (onAuctionUpdated) {
-            onAuctionUpdated(); // Вызываем обновление (если необходимо)
+            onAuctionUpdated();
         }
     };
 
@@ -144,25 +141,31 @@ const AdminAuctionForm = ({ token, selectedAuction, onAuctionUpdated }) => {
         <div className="form-container">
             <h2>{selectedAuction ? 'Edit Auction' : 'New Auction'}</h2>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-                <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
-                <input type="number" name="starting_price" placeholder="Starting Price" value={formData.starting_price} onChange={handleChange} required />
-                <input type="datetime-local" name="start_time" value={formData.start_time} onChange={handleChange} required />
-                <input type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange} required />
-                <input type="text" name="user_id" placeholder="User ID" value={formData.user_id} onChange={handleChange} />
+                <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange}
+                       required/>
+                <textarea name="description" placeholder="Description" value={formData.description}
+                          onChange={handleChange} required/>
+                <input type="number" name="starting_price" placeholder="Starting Price" value={formData.starting_price}
+                       onChange={handleChange} required/>
+                <input type="datetime-local" name="start_time" value={formData.start_time} onChange={handleChange}
+                       required/>
+                <input type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange}
+                       required/>
+                <input type="text" name="user_id" placeholder="User ID" value={formData.user_id}
+                       onChange={handleChange}/>
 
                 <div className="image-upload-container">
-                    <input type="file" name="image" ref={fileInputRef} onChange={handleImageChange} />
+                    <input type="file" name="image" ref={fileInputRef} onChange={handleImageChange}/>
                     {formData.image && (
-                        <button type="button" onClick={handleImageCancel} className="cancel-button">Cancel</button>
+                        <>
+                            <button type="button" onClick={handleImageCancel} className="white-button">Cancel</button>
+                            <div className="image-preview">
+                                <img src={URL.createObjectURL(formData.image)} alt="Preview"/>
+                            </div>
+                        </>
                     )}
                 </div>
 
-                <div className="image-preview">
-                    {formData.image && (
-                        <img src={URL.createObjectURL(formData.image)} alt="Preview" style={{ width: 50, height: 50 }} />
-                    )}
-                </div>
 
                 <button type="submit">{selectedAuction ? 'Save' : 'Create'}</button>
                 <button type="button" onClick={handleCancel} className="button1">Cancel Edit</button>

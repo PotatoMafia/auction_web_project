@@ -9,8 +9,8 @@ const UserProfile = () => {
     const [userData, setUserData] = useState(null);
     const [bids, setBids] = useState([]);
     const [transactions, setTransactions] = useState([]);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email] = useState('');
+    const [password] = useState('');
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -44,7 +44,7 @@ const UserProfile = () => {
         fetchUserData();
     }, [userId, navigate]);
 
-    const handleLogin = async () => {
+    async () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
             const loggedInUserId = response.data.user_id;
@@ -89,23 +89,7 @@ const UserProfile = () => {
                             <button onClick={handleAdminAccess}>Go to Admin Panel</button>
                         )}
                     </div>
-                ) : (
-                    <div className="login-section">
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button onClick={handleLogin}>Login</button>
-                    </div>
-                )}
+                ) : null}
 
                 <h3>Bidding History</h3>
                 {bids.length > 0 ? (

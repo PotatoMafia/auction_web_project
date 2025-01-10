@@ -18,35 +18,35 @@ html, body {
     box-sizing: border-box;
 }
 
-.logout-button {
-    width: 80px;
-    height: 30px;
-    background-color: #f44336;
-    color: #fff;
-    border: none;
+.logout-button, .loginn-button, .buttonStyle {
+    padding: 8px 15px;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
     font-size: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    width: 100px;
+    height: 40px;
+}
+
+.logout-button {
+    background-color: #f44336;
+    color: #fff;
 }
 
 .loginn-button {
-    width: 80px;
-    height: 30px;
-    background-color: #1cd231;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #46ffd9;
+    color: #000000;
+
 }
 
 .logout-button:hover {
     background-color: #d32f2f;
 }
 
+.loginn-button:hover {
+    background-color: #36d7b7;
+}
