@@ -12,6 +12,8 @@ const AdminAuctionList = ({ auctions, onSelectAuction }) => {
                     <th>Data Rozpoczęcia</th>
                     <th>Data Zakończenia</th>
                     <th>User ID</th>
+                    <th>Status</th>
+                    <th>Obrazek</th>
                     <th>Akcje</th>
                 </tr>
                 </thead>
@@ -24,7 +26,19 @@ const AdminAuctionList = ({ auctions, onSelectAuction }) => {
                         <td>{auction.starting_price}</td>
                         <td>{new Date(auction.start_time).toLocaleString()}</td>
                         <td>{new Date(auction.end_time).toLocaleString()}</td>
-                        <td>{auction.user_id || 'N/A'}</td> {}
+                        <td>{auction.user_id || 'N/A'}</td>
+                        <td>{auction.status}</td>
+                        <td>
+                            {auction.image_url ? (
+                                <img
+                                    src={`http://127.0.0.1:5000/imagesForAuctions/${auction.image_url}`}
+                                    // alt={auction.title}
+                                    style={{ width: '100px', height: '100px' }}
+                                />
+                            ) : (
+                                <span>No image</span>
+                            )}
+                        </td>
                         <td>
                             <button onClick={() => onSelectAuction(auction)}>Edytuj</button>
                         </td>

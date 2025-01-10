@@ -24,6 +24,7 @@ export const fetchAuctions = async (token) => {
     const response = await axios.get('http://127.0.0.1:5000/auctions', {
         headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
         },
     });
     return response.data;
@@ -35,7 +36,6 @@ export const createAuction = async (auctionData, token) => {
     const response = await axios.post(`${API_URL}/admin/auction`, auctionData, {
         headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
         }
     });
     return response.data;
