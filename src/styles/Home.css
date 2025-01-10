@@ -1,0 +1,46 @@
+/* Стиль для анимации сердца */
+.heart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.heart {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    transform: rotate(45deg);
+    animation: spin 2s infinite;
+    position: relative;
+}
+
+.heart:before,
+.heart:after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.heart:before {
+    left: 50px;
+    top: 0;
+}
+
+.heart:after {
+    top: 50px;
+    left: 0;
+}
+
+/* Анимация крутящегося сердца */
+@keyframes spin {
+    0% {
+        transform: rotate(45deg);
+    }
+    100% {
+        transform: rotate(405deg);
+    }
+}
