@@ -19,6 +19,7 @@ RUN npm run build
 # Use a lightweight server for the built app
 FROM nginx:alpine
 COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=0 /app/nginx /etc/nginx/conf.d
 
 # Expose the port the app runs on
 EXPOSE 80
