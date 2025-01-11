@@ -10,11 +10,10 @@ export default function CreateAuction() {
     const [startPrice, setStartPrice] = useState(0);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [image, setImage] = useState(null); // Dodany stan dla obrazka
     const [token] = useState(localStorage.getItem('token'));
     const [user_id] = useState(localStorage.getItem('userId'));
     const navigate = useNavigate();
-
-
 
     const formatDate = (date) => {
         const year = date.getFullYear();
@@ -26,8 +25,6 @@ export default function CreateAuction() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -38,10 +35,30 @@ export default function CreateAuction() {
             description,
             startPrice,
         };
+
         console.log("Auction created:", auctionData);
-        createAuction(token,formatDate(startDate),formatDate(endDate),startPrice,user_id,title,description)
+
+        if (image) {
+            console.log("Image uploaded:", image);
+        }
+
+        createAuction(
+            token,
+            formatDate(startDate),
+            formatDate(endDate),
+            startPrice,
+            user_id,
+            title,
+            description,
+            image,
+        );
+
         alert("Auction submitted successfully!");
         navigate('/dashboard');
+    };
+
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]); // Przechowywanie pliku obrazu
     };
 
     return (
@@ -78,7 +95,7 @@ export default function CreateAuction() {
                         onChange={(e) => setStartPrice(parseFloat(e.target.value))}
                         required
                         style={{ width: "100%", padding: "8px" }}
-                        step="0.01" // Pozwala na wprowadzanie liczb zmiennoprzecinkowych
+                        step="0.01"
                     />
                 </div>
 
@@ -99,6 +116,16 @@ export default function CreateAuction() {
                         onChange={(date) => setEndDate(date)}
                         showTimeSelect
                         dateFormat="Pp"
+                        style={{ width: "100%", padding: "8px" }}
+                    />
+                </div>
+                <div style={{ marginBottom: "15px" }}>
+                    <label htmlFor="image">Upload Image:</label>
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        onChange={handleImageChange}
                         style={{ width: "100%", padding: "8px" }}
                     />
                 </div>

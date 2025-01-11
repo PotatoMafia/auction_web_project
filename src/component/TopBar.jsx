@@ -40,6 +40,9 @@ const TopBar = ({ onLogout, onLogin }) => {
     const goToHome = () => {
         navigate('/');
     };
+    const goToUserDashboard = () => {
+        navigate('/dashboard');
+    };
 
     const goToUserPanel = () => {
         if (zalogowany) {
@@ -69,6 +72,11 @@ const TopBar = ({ onLogout, onLogin }) => {
                 {zalogowany && (
                     <button onClick={goToUserPanel} style={buttonStyle}>
                         UserPanel
+                    </button>
+                )}
+                {zalogowany && (
+                    <button onClick={goToUserDashboard} style={buttonStyle}>
+                        Auction Board
                     </button>
                 )}
                 <button
