@@ -13,6 +13,6 @@ describe('Bid Component', () => {
     render(<Bid auction_id={auction_id} bid_price={bid_price} bid_time={bid_time} user_id={user_id} />);
 
     // Sprawdzanie, czy dane są poprawnie wyświetlane w tekście
-    expect(screen.getByText(`Użytkownik: ${user_id} - Kwota: ${bid_price} - czas: ${bid_time}`)).toBeInTheDocument();
+    expect(screen.getByText(`Użytkownik: ${user_id} - Kwota: ${bid_price} - Czas: ${bid_time}`)).toBeInTheDocument();
   });
 });

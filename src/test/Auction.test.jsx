@@ -53,7 +53,7 @@ describe('Auction Component', () => {
     render(<Auction {...auctionDataWithoutImage} />);
 
     // Sprawdzamy, czy tekst "No image" jest wyświetlany
-    expect(screen.getByText('No image')).toBeInTheDocument();
+    expect(screen.getByText('Brak obrazu')).toBeInTheDocument();
   });
 
   it('should call onCheck when "Sprawdz aukcje" button is clicked', () => {

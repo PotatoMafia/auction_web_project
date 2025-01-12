@@ -1,108 +1,117 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/logout.css';
+import { useEffect, useState } from 'react'; // Import React hooks
+import { useNavigate } from 'react-router-dom'; // Import navigate function for routing
+import '../styles/logout.css'; // Import CSS file for styling
 
 // eslint-disable-next-line react/prop-types
 const TopBar = ({ onLogout, onLogin }) => {
-    const navigate = useNavigate();
-    const [logged, setLogged] = useState([]);
-    const [token] = useState(localStorage.getItem('token'));
-    const [user_id] = useState(localStorage.getItem('userId'));
-    const zalogowany = logged;
+    const navigate = useNavigate(); // Initialize the navigate function for routing
+    const [logged, setLogged] = useState([]); // State to track if the user is logged in
+    const [token] = useState(localStorage.getItem('token')); // Retrieve token from localStorage
+    const [user_id] = useState(localStorage.getItem('userId')); // Retrieve userId from localStorage
+    const zalogowany = logged; // Variable to track the logged-in status
 
+    // Function to check if the token is valid (not expired)
     const isTokenValid = (token) => {
         try {
-            const decoded = JSON.parse(atob(token.split('.')[1]));
-            return decoded.exp * 1000 > Date.now();
+            const decoded = JSON.parse(atob(token.split('.')[1])); // Decode the JWT token
+            return decoded.exp * 1000 > Date.now(); // Compare expiration time to current time
         } catch {
-            return false;
+            return false; // Return false if token decoding fails
         }
     };
 
+    // useEffect hook to check token validity when token changes
     useEffect(() => {
         if (!token || !isTokenValid(token)) {
-            setLogged(false);
+            setLogged(false); // Set logged state to false if token is invalid
         } else {
-            setLogged(true);
+            setLogged(true); // Set logged state to true if token is valid
         }
-    }, [token]);
+    }, [token]); // Dependency array to re-run when token changes
 
+    // Handle logout process: clear localStorage and call the onLogout function
     const handleLogout = () => {
-        localStorage.clear();
-        onLogout();
+        localStorage.clear(); // Clear localStorage
+        onLogout(); // Call the onLogout callback function
     };
 
+    // Handle login process: clear localStorage and call the onLogin function
     const handleLogin = () => {
-        localStorage.clear();
-        onLogin();
+        localStorage.clear(); // Clear localStorage
+        onLogin(); // Call the onLogin callback function
     };
 
+    // Navigate to the home page
     const goToHome = () => {
-        navigate('/');
-    };
-    const goToUserDashboard = () => {
-        navigate('/dashboard');
+        navigate('/'); // Navigate to the home route
     };
 
+    // Navigate to the user dashboard page
+    const goToUserDashboard = () => {
+        navigate('/dashboard'); // Navigate to the user dashboard route
+    };
+
+    // Navigate to the user profile page if logged in
     const goToUserPanel = () => {
         if (zalogowany) {
-            console.log('Navigating to UserPanel for userId:', user_id);
-            navigate(`/user/${user_id}`);
+            console.log('Navigating to UserPanel for userId:', user_id); // Log the userId to console
+            navigate(`/user/${user_id}`); // Navigate to the user profile page with the userId
         } else {
-            console.log('UserId is not available');
+            console.log('UserId is not available'); // Log if userId is not available
         }
     };
 
     return (
         <div
             style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '10px 20px',
-                backgroundColor: '#f8f9fa',
-                borderBottom: '1px solid #ddd',
+                display: 'flex', // Use flexbox for layout
+                justifyContent: 'space-between', // Space out elements in the top bar
+                alignItems: 'center', // Vertically align items in the center
+                padding: '10px 20px', // Add padding around the top bar
+                backgroundColor: '#f8f9fa', // Light background color
+                borderBottom: '1px solid #ddd', // Add a border at the bottom of the top bar
             }}
         >
-            <h2 style={{ margin: 0 }}>Panel</h2>
-            <div style={{ display: 'flex', gap: '15px' }}>
-                <button onClick={goToHome} style={buttonStyle}>
+            <h2 style={{ margin: 0 }}>Panel</h2> {/* Display the title of the panel */}
+            <div style={{ display: 'flex', gap: '15px' }}> {/* Flexbox layout for the buttons */}
+                <button onClick={goToHome} style={buttonStyle}> {/* Navigate to home */}
                     Home
                 </button>
-                {zalogowany && (
-                    <button onClick={goToUserPanel} style={buttonStyle}>
-                        UserPanel
+                {zalogowany && ( 
+                    <button onClick={goToUserPanel} style={buttonStyle}> {/* Navigate to user panel if logged in */}
+                        Panel Uzytkownika
                     </button>
                 )}
                 {zalogowany && (
-                    <button onClick={goToUserDashboard} style={buttonStyle}>
-                        Auction Board
+                    <button onClick={goToUserDashboard} style={buttonStyle}> {/* Navigate to auction dashboard if logged in */}
+                        Lista Aukcji
                     </button>
                 )}
                 <button
-                    className={zalogowany ? 'logout-button' : 'loginn-button'}
-                    onClick={zalogowany ? handleLogout : handleLogin}
+                    className={zalogowany ? 'logout-button' : 'loginn-button'} // Apply different class based on login status
+                    onClick={zalogowany ? handleLogout : handleLogin} // Call appropriate function based on login status
                     style={buttonStyle}
                 >
-                    {zalogowany ? 'Logout' : 'Login'}
+                    {zalogowany ? 'Logout' : 'Login'} {/* Display 'Logout' if logged in, 'Login' otherwise */}
                 </button>
             </div>
         </div>
     );
 };
 
+// Styles for the buttons
 const buttonStyle = {
-    padding: '8px 15px',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: '#46ffd9',
-    color: '#000',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: '0.75rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: '8px 15px', // Button padding
+    borderRadius: '5px', // Rounded corners
+    border: 'none', // Remove border
+    backgroundColor: '#46ffd9', // Light greenish background color
+    color: '#000', // Black text color
+    cursor: 'pointer', // Pointer cursor on hover
+    fontWeight: 'bold', // Bold font
+    fontSize: '0.75rem', // Smaller font size
+    display: 'flex', // Flexbox layout for center alignment
+    justifyContent: 'center', // Center content horizontally
+    alignItems: 'center', // Center content vertically
 };
 
 export default TopBar;

@@ -39,12 +39,12 @@ describe('CreateAuction Component', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByLabelText(/title/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/starting price/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/start date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/end date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/upload image/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/tytul/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/opis/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/cena startowa/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/start aukcji/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/koniec aukcji/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/dodaj obraz/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
 
@@ -57,9 +57,9 @@ describe('CreateAuction Component', () => {
       </BrowserRouter>
     );
 
-    const titleInput = screen.getByLabelText(/title/i);
-    const descriptionInput = screen.getByLabelText(/description/i);
-    const startPriceInput = screen.getByLabelText(/starting price/i);
+    const titleInput = screen.getByLabelText(/tytul/i);
+    const descriptionInput = screen.getByLabelText(/opis/i);
+    const startPriceInput = screen.getByLabelText(/cena startowa/i);
     const submitButton = screen.getByRole('button', { name: /submit/i });
 
     await userEvent.type(titleInput, 'Auction Title');
@@ -91,15 +91,15 @@ describe('CreateAuction Component', () => {
       </BrowserRouter>
     );
 
-    await userEvent.type(screen.getByLabelText(/title/i), 'Auction Title');
-    await userEvent.type(screen.getByLabelText(/description/i), 'This is a description.');
-    await userEvent.type(screen.getByLabelText(/starting price/i), '123.45');
+    await userEvent.type(screen.getByLabelText(/tytul/i), 'Auction Title');
+    await userEvent.type(screen.getByLabelText(/opis/i), 'This is a description.');
+    await userEvent.type(screen.getByLabelText(/cena startowa/i), '123.45');
 
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     fireEvent.click(submitButton);
 
-    expect(alertMock).toHaveBeenCalledWith('Auction submitted successfully!');
+    expect(alertMock).toHaveBeenCalledWith('Aukcja stworzona pomyslnie!');
     expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
   });
 });

@@ -108,7 +108,7 @@ describe('Register Component', () => {
 
         fireEvent.click(registerButton);
 
-        const errorMessage = await screen.findByText(/failed to register/i);
+        const errorMessage = await screen.findByText(/Nieudalo sie zarejestrowac/i);
         expect(errorMessage).toBeInTheDocument();
     });
 });

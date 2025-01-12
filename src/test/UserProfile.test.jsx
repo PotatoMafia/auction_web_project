@@ -69,15 +69,15 @@ describe('UserProfile Component', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/Email: test@example.com/i)).toBeInTheDocument();
-      expect(screen.getByText(/Username: testuser/i)).toBeInTheDocument();
+      expect(screen.getByText(/Nick: testuser/i)).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/Auction ID: 101, Bid: \$50/i)).toBeInTheDocument();
+      expect(screen.getByText(/ID aukcji: 101, Oferta: \$50/i)).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/Auction ID: 101, Payment Status: Completed/i)).toBeInTheDocument();
+      expect(screen.getByText(/ID aukcji: 101, Stan Oplaty: Completed/i)).toBeInTheDocument();
     });
   });
 });
