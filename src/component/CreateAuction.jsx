@@ -100,8 +100,9 @@ export default function CreateAuction() {
                 </div>
 
                 <div style={{ marginBottom: "15px" }}>
-                    <label>Start Date:</label>
+                    <label htmlFor="startDate">Start Date:</label>
                     <DatePicker
+                        id="startDate"
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
                         showTimeSelect
@@ -110,8 +111,9 @@ export default function CreateAuction() {
                     />
                 </div>
                 <div style={{ marginBottom: "15px" }}>
-                    <label>End Date:</label>
+                    <label htmlFor="endDate">End Date:</label>
                     <DatePicker
+                        id="endDate"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         showTimeSelect
