@@ -1,7 +1,7 @@
 
 
 
-
+import { API_URL } from '../config.js';
 
 // eslint-disable-next-line react/prop-types
 export default function Auction({auction_id, description, end_time, start_time, starting_price, title, user_id,status,image_url, onCheck = f => f}) {
@@ -44,7 +44,7 @@ export default function Auction({auction_id, description, end_time, start_time, 
             {console.log(image_url)}
             {image_url ? (
                                 <img
-                                    src={`http://127.0.0.1:5000/imagesForAuctions/${image_url}`}
+                                    src={`${API_URL}/imagesForAuctions/${image_url}`}
                                     // alt={auction.title}
                                     style={{ width: '100px', height: '100px' }}
                                 />

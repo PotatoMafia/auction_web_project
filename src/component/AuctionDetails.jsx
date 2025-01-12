@@ -3,6 +3,7 @@ import  { useEffect, useState } from 'react';
 import { useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Bid from './Bid';
+import { API_URL } from '../config.js';
 
 
 const isTokenValid = (token) => {
@@ -37,7 +38,7 @@ const AuctionDetails = () => {
     useEffect(() => {
         const fetchAuctionDetails = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/auction/${auctionId}`);
+                const response = await axios.get(`${API_URL}/auction/${auctionId}`);
                 setAuction(response.data);
                 setBids(response.data.bids);
             } catch (error) {
@@ -51,7 +52,7 @@ const AuctionDetails = () => {
     const handleBidSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:5000/bid', {
+            await axios.post(`${API_URL}/bid`, {
                 headers: {Authorization: `Bearer ${token}`},
             auction_id: auctionId, bid_price: bidAmount, user_id: localStorage.getItem('userId') });
             alert('Bid placed successfully!');

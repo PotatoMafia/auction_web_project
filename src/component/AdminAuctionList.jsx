@@ -1,4 +1,5 @@
 // eslint-disable-next-line react/prop-types
+import { API_URL } from '../config.js';
 const AdminAuctionList = ({ auctions, onSelectAuction }) => {
     return (
         <div>
@@ -31,7 +32,7 @@ const AdminAuctionList = ({ auctions, onSelectAuction }) => {
                         <td>
                             {auction.image_url ? (
                                 <img
-                                    src={`http://127.0.0.1:5000/imagesForAuctions/${auction.image_url}`}
+                                    src={`${API_URL}/imagesForAuctions/${auction.image_url}`}
                                     // alt={auction.title}
                                     style={{ width: '100px', height: '100px' }}
                                 />
