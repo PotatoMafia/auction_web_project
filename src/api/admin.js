@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 //Pisze tu bo duzo danych w APP.jsx
-const API_URL = 'http://127.0.0.1:5000';
+import { API_URL } from '../config.js';
 
 // WSZ akc
 export const getAuctions = async (token) => {
     try {
-        const response = await axios.get(`http://127.0.0.1:5000/admin/auctions`, {
+        const response = await axios.get(`${API_URL}/admin/auctions`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -21,7 +21,7 @@ export const getAuctions = async (token) => {
 };
 
 export const fetchAuctions = async (token) => {
-    const response = await axios.get('http://127.0.0.1:5000/auctions', {
+    const response = await axios.get(`${API_URL}/auctions`, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const fetchAuctions = async (token) => {
 
 // Nowa
 export const createAuction = async (auctionData, token) => {
-    const response = await axios.post(`http://127.0.0.1:5000/admin/auction`, auctionData, {
+    const response = await axios.post(`${API_URL}/admin/auction`, auctionData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
